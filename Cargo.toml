@@ -1,0 +1,39 @@
+[package]
+authors = ["u007d <b2b@humanenginuity.com>"]
+categories = []
+edition = "2018"
+keywords = []
+license = "MIT or Apache-2.0"
+name = "ranged_const"
+readme = "README.md"
+repository = "https://github.com/u007d/ranged_const"
+version = "0.1.0"
+
+[dependencies]
+thiserror = "*"
+
+[profile.dev]
+codegen-units = 1
+debug = true
+debug-assertions = true
+lto = false
+opt-level = 0
+panic = "unwind"
+rpath = false
+
+[profile.release]
+codegen-units = 1
+debug = false
+debug-assertions = false
+lto = true
+opt-level = 3
+panic = "unwind"
+rpath = false
+
+[profile.test]
+codegen-units = 1
+debug = true
+debug-assertions = true
+lto = false
+opt-level = 0
+rpath = false
