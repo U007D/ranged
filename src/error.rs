@@ -23,6 +23,7 @@ impl Error {
     }
     #[cfg(not(feature = "const_fn"))]
     #[allow(clippy::missing_const_for_fn)]
+    #[must_use]
     pub fn kind(&self) -> ErrorKind {
         #[allow(clippy::unneeded_field_pattern)]
         match self.0 {
