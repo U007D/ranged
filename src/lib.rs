@@ -20,12 +20,8 @@
 
 mod consts;
 mod error;
-mod ranged;
+mod ranged_i32;
 pub use error::Error;
-pub use ranged::Ranged;
+pub use ranged_i32::RangedI32;
 
 pub type Result<T, E = Error> = std::result::Result<T, E>;
-
-struct Foo {
-    quality: Ranged<100, 50>,
-}
