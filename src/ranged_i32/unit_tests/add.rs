@@ -1,5 +1,4 @@
 use super::*;
-use crate::Result;
 
 #[test]
 fn add__adding_two_ranged_i32s_without_overflowing_succeeds() {

@@ -11,15 +11,16 @@ pub struct RangedI32<const START: i32, const END: i32> {
 }
 
 impl<const START: i32, const END: i32> RangedI32<START, END> {
+    const INVARIANT: () = assert!(START < END, msg::ERR_INVALID_RANGE_BOUNDS);
+
     #[must_use]
+    #[allow(clippy::let_unit_value)]
     pub const fn new(value: i32) -> Option<Self> {
-        // TODO: Upgrade to compile-time range bounds validity checking once supported/discovered
-        match START <= END {
-            true => match START <= value && value < END {
-                true => Some(Self { value }),
-                false => None,
-            },
-            false => panic!(msg::ERR_INVALID_RANGE_BOUNDS),
+        let _ = Self::INVARIANT;
+
+        match START <= value && value < END {
+            true => Some(Self { value }),
+            false => None,
         }
     }
 

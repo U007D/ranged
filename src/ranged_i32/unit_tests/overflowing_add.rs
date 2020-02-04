@@ -1,5 +1,4 @@
 use super::*;
-use crate::Result;
 
 #[test]
 fn overflowing_add__adding_a_non_overflowing_scalar_to_a_ranged_does_not_overflow() {
