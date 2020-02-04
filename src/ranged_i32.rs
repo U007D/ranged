@@ -12,6 +12,16 @@ pub struct RangedI32<const START: i32, const END: i32> {
 
 impl<const START: i32, const END: i32> RangedI32<START, END> {
     const INVARIANT: () = assert!(START < END, msg::ERR_INVALID_RANGE_BOUNDS);
+    const U32_MSB_MASK: u32 = 0x8000_0000;
+    const RANGE_SPAN: u32 = Self::unsigned_prep_span(END) - Self::unsigned_prep_span(START);
+    const WORD_OFFSET_1: i32 = match RANGE_SPAN > i32::max_value() as u32 {
+        true => i32::max_value(),
+        false => RANGE_SPAN as i32,
+    };
+    const WORD_OFFSET_2: i32 = match RANGE_SPAN > i32::max_value() as u32 {
+        true => RANGE_SPAN - i32::max_value(),
+        false => 0,
+    };
 
     #[must_use]
     #[allow(clippy::let_unit_value)]
@@ -24,28 +34,34 @@ impl<const START: i32, const END: i32> RangedI32<START, END> {
         }
     }
 
+    const fn unsigned_prep_span(n: i32) -> u32 {
+        #[allow(clippy::cast_sign_loss)]
+        match n >= 0 {
+            true => n as u32 | Self::U32_MSB_MASK,
+            false => (n - i32::min_value()) as u32,
+        }
+    }
+
     #[must_use]
     #[allow(clippy::integer_arithmetic)]
     pub const fn overflowing_add(self, rhs: i32) -> (Self, bool) {
-        let span = END - START;
-
-        match span > 0 {
+        match Self::RANGE_SPAN > 0 {
             true => {
-                let r_value = rhs % span;
+                let r_value = rhs % Self::RANGE_SPAN;
                 match self.value < END - r_value {
                     // summed value within type's range
                     true => (
                         Self {
                             value: self.value + r_value,
                         },
-                        rhs >= span,
+                        rhs >= Self::RANGE_SPAN,
                     ),
                     false => {
                         match self.value < i32::max_value() - r_value {
                             // summed value within machine word range
                             true => (
                                 Self {
-                                    value: (self.value + r_value) % span,
+                                    value: (self.value + r_value) % Self::RANGE_SPAN,
                                 },
                                 true,
                             ),
