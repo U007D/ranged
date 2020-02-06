@@ -13,15 +13,7 @@ pub struct RangedI32<const START: i32, const END: i32> {
 impl<const START: i32, const END: i32> RangedI32<START, END> {
     const INVARIANT: () = assert!(START < END, msg::ERR_INVALID_RANGE_BOUNDS);
     const U32_MSB_MASK: u32 = 0x8000_0000;
-    const RANGE_SPAN: u32 = Self::unsigned_prep_span(END) - Self::unsigned_prep_span(START);
-    const WORD_OFFSET_1: i32 = match RANGE_SPAN > i32::max_value() as u32 {
-        true => i32::max_value(),
-        false => RANGE_SPAN as i32,
-    };
-    const WORD_OFFSET_2: i32 = match RANGE_SPAN > i32::max_value() as u32 {
-        true => RANGE_SPAN - i32::max_value(),
-        false => 0,
-    };
+    const RANGE_SPAN: u32 = Self::i32_to_u32(END) - Self::i32_to_u32(START);
 
     #[must_use]
     #[allow(clippy::let_unit_value)]
@@ -34,52 +26,83 @@ impl<const START: i32, const END: i32> RangedI32<START, END> {
         }
     }
 
-    const fn unsigned_prep_span(n: i32) -> u32 {
-        #[allow(clippy::cast_sign_loss)]
-        match n >= 0 {
-            true => n as u32 | Self::U32_MSB_MASK,
-            false => (n - i32::min_value()) as u32,
+    #[inline]
+    #[allow(clippy::integer_arithmetic, clippy::checked_conversions)]
+    const fn wrapping_offset_to_value(offset: u32, base: i32) -> i32 {
+        #[allow(clippy::cast_possible_wrap)]
+        match offset <= (i32::max_value() as u32) {
+            true => base.wrapping_add(offset as i32),
+            false => base
+                .wrapping_add(i32::max_value())
+                .wrapping_add((offset - i32::max_value() as u32) as i32),
+        }
+    }
+
+    #[inline]
+    #[allow(clippy::integer_arithmetic)]
+    const fn value_to_offset(base: i32, value: i32) -> u32 {
+        let u_base = Self::i32_to_u32(base);
+        let u_value = Self::i32_to_u32(value);
+        Self::max(u_base, u_value) - Self::min(u_base, u_value)
+    }
+
+    #[inline]
+    #[allow(clippy::integer_arithmetic)]
+    const fn i32_to_u32(value: i32) -> u32 {
+        match value >= 0 {
+            #[allow(clippy::cast_sign_loss)]
+            true => value as u32 | Self::U32_MSB_MASK,
+            #[allow(clippy::cast_sign_loss)]
+            false => (value - i32::min_value()) as u32,
+        }
+    }
+
+    #[inline]
+    const fn max(a: u32, b: u32) -> u32 {
+        match a >= b {
+            true => a,
+            false => b,
+        }
+    }
+
+    #[inline]
+    const fn min(a: u32, b: u32) -> u32 {
+        match a <= b {
+            true => a,
+            false => b,
         }
     }
 
     #[must_use]
     #[allow(clippy::integer_arithmetic)]
-    pub const fn overflowing_add(self, rhs: i32) -> (Self, bool) {
-        match Self::RANGE_SPAN > 0 {
+    pub fn overflowing_add(self, rhs: i32) -> (Self, bool) {
+        let value_start_offset = Self::value_to_offset(START, self.value);
+        match rhs >= 0 {
             true => {
-                let r_value = rhs % Self::RANGE_SPAN;
-                match self.value < END - r_value {
-                    // summed value within type's range
+                #[allow(clippy::cast_sign_loss)]
+                let u_rhs = rhs as u32;
+                let (value, overflow) = value_start_offset.overflowing_add(u_rhs);
+                match overflow {
                     true => (
-                        Self {
-                            value: self.value + r_value,
-                        },
-                        rhs >= Self::RANGE_SPAN,
+                        Self::new(Self::wrapping_offset_to_value(
+                            (u32::max_value() % Self::RANGE_SPAN + value % Self::RANGE_SPAN)
+                                % Self::RANGE_SPAN,
+                            START,
+                        ))
+                        .unwrap_or_else(|| unreachable!()),
+                        true,
                     ),
-                    false => {
-                        match self.value < i32::max_value() - r_value {
-                            // summed value within machine word range
-                            true => (
-                                Self {
-                                    value: (self.value + r_value) % Self::RANGE_SPAN,
-                                },
-                                true,
-                            ),
-                            // summed value overflows machine word range
-                            false => {
-                                let offset = START - i32::min_value();
-                                (
-                                    Self {
-                                        value: (self.value.wrapping_add(r_value) + offset),
-                                    },
-                                    true,
-                                )
-                            }
-                        }
-                    }
+                    false => (
+                        Self::new(Self::wrapping_offset_to_value(
+                            value % Self::RANGE_SPAN,
+                            START,
+                        ))
+                        .unwrap_or_else(|| unreachable!()),
+                        value / Self::RANGE_SPAN > 0,
+                    ),
                 }
             }
-            false => (self, true),
+            false => unimplemented!(),
         }
     }
 }
