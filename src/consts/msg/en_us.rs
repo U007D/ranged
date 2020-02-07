@@ -6,5 +6,7 @@ pub const ERR_INVALID_RANGE_BOUNDS: &str =
 pub const ERR_INTERNAL_VALUE_UNEXPECTEDLY_EXCEEDED_RANGE_BOUNDS: &str =
     "Internal error: Valud value(s) (within range bounds) unexpectedly detected outside of range \
     bounds following arithmetic operation.";
-pub const ERR_OVERFLOW_RANGED_I32_ADD_I32: &str = "Add<i32> for RangedI32<{}, {}> i32 overflow";
-pub const ERR_OVERFLOW_RANGED_I32_SUB_I32: &str = "Sub<i32> for RangedI32<{}, {}> i32 overflow";
+pub const ERR_OVERFLOW_RANGED_I32_ADD_I32_A: &str = "Add<i32> for RangedI32<";
+pub const ERR_OVERFLOW_RANGED_I32_ADD_I32_B: &str = "> i32 overflow";
+pub const ERR_OVERFLOW_RANGED_I32_SUB_I32_A: &str = "Sub<i32> for RangedI32<";
+pub const ERR_OVERFLOW_RANGED_I32_SUB_I32_B: &str = "> i32 overflow";

@@ -23,7 +23,13 @@ impl<const START: i32, const END: i32> Add<i32> for RangedI32<START, END> {
 
     fn add(self, rhs: i32) -> Self::Output {
         match self.overflowing_add(rhs) {
-            (_, true) => panic!(msg::ERR_OVERFLOW_RANGED_I32_SUB_I32, START, END),
+            (_, true) => panic!(
+                "{}{}, {}{}.",
+                msg::ERR_OVERFLOW_RANGED_I32_ADD_I32_A,
+                START,
+                END,
+                msg::ERR_OVERFLOW_RANGED_I32_ADD_I32_B
+            ),
             (value, _) => value,
         }
     }

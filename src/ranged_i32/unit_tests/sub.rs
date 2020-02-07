@@ -10,7 +10,7 @@ fn sub__subtracting_two_ranged_i32s_without_overflowing_succeeds() {
     let res = r1 - r2;
 
     // then
-    assert_eq!(res, RangedI32::<54, 95>::new(75).unwrap());
+    assert_eq!(res, RangedI32::<54, 96>::new(75).unwrap());
 }
 
 //#[test]

@@ -19,6 +19,7 @@
 //#![deny(warnings)]
 
 mod arith_traits;
+mod arith_helpers;
 mod consts;
 mod error;
 mod ranged_i32;
