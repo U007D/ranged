@@ -18,9 +18,11 @@
 //#![warn(clippy::cargo, clippy::restriction, missing_docs, warnings)]
 //#![deny(warnings)]
 
+mod arith_traits;
 mod consts;
 mod error;
 mod ranged_i32;
+pub use arith_traits::{OverflowingAdd, OverflowingSub};
 pub use error::Error;
 pub use ranged_i32::RangedI32;
 
