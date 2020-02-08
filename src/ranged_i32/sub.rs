@@ -1,17 +1,12 @@
 use super::*;
 use crate::{arith_helpers::*, OverflowingSub};
-use std::{
-    ops::Sub,
-};
+use std::ops::Sub;
 
 #[allow(clippy::use_self)]
 impl<const START: i32, const END: i32, const START_RHS: i32, const END_RHS: i32>
     Sub<RangedI32<START_RHS, END_RHS>> for RangedI32<START, END>
 {
-    type Output = RangedI32<
-        { compute_bounds(START, END, START_RHS, END_RHS).0 },
-        { compute_bounds(START, END, START_RHS, END_RHS).1 },
-    >;
+    type Output = RangedI32<{ START - END_RHS + 1 }, { END - START_RHS - 1 }>;
 
     // See `RangedI32::add()` impl for explanation of why no overflow checks need to be performed
     // here.
@@ -36,16 +31,5 @@ impl<const START: i32, const END: i32> Sub<i32> for RangedI32<START, END> {
             ),
             (value, _) => value,
         }
-    }
-}
-
-#[allow(clippy::integer_arithmetic)]
-const fn compute_bounds(start: i32, end: i32, start_rhs: i32, end_rhs: i32) -> (i32, i32) {
-    let new_start = start - start_rhs;
-    let new_end = end - end_rhs;
-
-    match new_start <= new_end {
-        true => (new_start, new_end),
-        false => (new_end - 1, new_start + 1),
     }
 }
