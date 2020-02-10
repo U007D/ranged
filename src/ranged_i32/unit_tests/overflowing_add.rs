@@ -2,7 +2,7 @@ use super::*;
 use crate::arith_traits::OverflowingAdd;
 
 #[test]
-fn overflowing_add__adding_a_non_overflowing_scalar_to_a_ranged_does_not_overflow() {
+fn overflowing_add__adding_a_non_overflowing_scalar_does_not_overflow() {
     // given
     let ranged = RangedI32::<0, 100>::new(42).unwrap();
     let scalar = 42;
@@ -15,7 +15,7 @@ fn overflowing_add__adding_a_non_overflowing_scalar_to_a_ranged_does_not_overflo
 }
 
 #[test]
-fn overflowing_add__adding_a_range_overflowing_scalar_to_a_ranged_overflows() {
+fn overflowing_add__adding_a_range_overflowing_scalar_overflows() {
     // given
     let ranged = RangedI32::<0, 100>::new(80).unwrap();
     let scalar = 95;
@@ -28,7 +28,7 @@ fn overflowing_add__adding_a_range_overflowing_scalar_to_a_ranged_overflows() {
 }
 
 #[test]
-fn overflowing_add__adding_a_machine_word_overflowing_scalar_to_a_ranged_overflows() {
+fn overflowing_add__adding_a_machine_word_overflowing_scalar_overflows() {
     // given
     let ranged = RangedI32::<0, 100>::new(72).unwrap();
     let scalar = i32::max_value();

@@ -20,7 +20,8 @@ impl<const START: i32, const END: i32> OverflowingSub<i32> for RangedI32<START, 
                         Self::new(
                             END - (((START - i32::min_value()) as u32
                                 + (i32::max_value() - value) as u32)
-                                % Self::RANGE_SPAN) as i32,
+                                % Self::RANGE_SPAN) as i32
+                                - 1,
                         )
                         .unwrap_or_else(|| unreachable!()),
                         true,
