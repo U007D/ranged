@@ -1,15 +1,16 @@
-use super::*;
+use super::{panic, RangedI32};
 use crate::OverflowingSub;
 
 impl<const START: i32, const END: i32> OverflowingSub<i32> for RangedI32<START, END> {
     type Output = (Self, bool);
 
     #[must_use]
-    #[allow(clippy::integer_arithmetic)]
     // The difference between two signed values when interpreted `as u32` (below) is the absolute
     // value of their difference, regardless of sign.  `as i32` below is non-lossy since `value`
-    // is guaranteed to be within `i32::max_value()` elements of `START` (it is the result of a
-    // subtraction of an `i32` from an `i32`)
+    // is guaranteed to be within `i32::max_value()` elements of `START` (`value` is the result of a
+    // subtraction of an `i32` from an `i32`) and thus these integer arithmetic operations cannot
+    // overflow.
+    #[allow(clippy::integer_arithmetic)]
     fn overflowing_sub(self, rhs: i32) -> (Self, bool) {
         match rhs >= 0 {
             true => {

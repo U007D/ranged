@@ -1,5 +1,5 @@
 use super::*;
-use crate::arith_traits::{OverflowingAdd, OverflowingSub};
+use crate::arith_traits::OverflowingSub;
 
 #[test]
 fn overflowing_sub__subtracting_a_non_overflowing_scalar_does_not_overflow() {
@@ -98,7 +98,7 @@ fn overflowing_sub__subtracting_a_machine_word_overflowing_scalar_from_a_mid_siz
     assert_eq!(
         res,
         (
-            RangedI32::<-1_147_483_648, 1_147_483_647>::new(1147483646).unwrap(),
+            RangedI32::<-1_147_483_648, 1_147_483_647>::new(1_147_483_646).unwrap(),
             true
         )
     );

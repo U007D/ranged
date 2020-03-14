@@ -5,7 +5,7 @@ mod sub;
 #[cfg(test)]
 mod unit_tests;
 
-use crate::{arith_helpers::i32_to_u32, consts::*};
+use crate::{arith_helpers::i32_to_u32, consts::msg};
 use std::ops::Add;
 use std::panic;
 

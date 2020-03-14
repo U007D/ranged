@@ -1,5 +1,5 @@
-use super::*;
-use crate::{arith_helpers::*, OverflowingSub};
+use super::{msg, panic, RangedI32};
+use crate::OverflowingSub;
 use std::ops::Sub;
 
 #[allow(clippy::use_self)]
