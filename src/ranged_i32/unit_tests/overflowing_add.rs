@@ -1,5 +1,5 @@
 use super::*;
-use crate::arith_traits::OverflowingAdd;
+use arith_traits::Overflow;
 
 #[test]
 fn overflowing_add__adding_a_non_overflowing_scalar_does_not_overflow() {

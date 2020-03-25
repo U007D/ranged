@@ -1,11 +1,13 @@
 use super::{panic, RangedI32};
-use crate::{
-    arith_helpers::{signed_value_to_offset, wrapping_offset_to_value},
-    OverflowingAdd,
-};
+use crate::arith_helpers::{signed_value_to_offset, wrapping_offset_to_value};
+use arith_traits::Overflow;
 
-impl<const START: i32, const END: i32> OverflowingAdd<i32> for RangedI32<START, END> {
+impl<const START: i32, const END: i32> Overflow<i32> for RangedI32<START, END> {
     type Output = (Self, bool);
+
+    fn overflowing_abs(self) -> Self::Output {
+        unimplemented!()
+    }
 
     #[must_use]
     #[allow(clippy::integer_arithmetic)]
@@ -35,5 +37,45 @@ impl<const START: i32, const END: i32> OverflowingAdd<i32> for RangedI32<START, 
             }
             false => unimplemented!(),
         }
+    }
+
+    fn overflowing_div(self, rhs: i32) -> Self::Output {
+        unimplemented!()
+    }
+
+    fn overflowing_div_euclid(self, rhs: i32) -> Self::Output {
+        unimplemented!()
+    }
+
+    fn overflowing_mul(self, rhs: i32) -> Self::Output {
+        unimplemented!()
+    }
+
+    fn overflowing_neg(self) -> Self::Output {
+        unimplemented!()
+    }
+
+    fn overflowing_pow(self, rhs: u32) -> Self::Output {
+        unimplemented!()
+    }
+
+    fn overflowing_rem(self, rhs: i32) -> Self::Output {
+        unimplemented!()
+    }
+
+    fn overflowing_rem_euclid(self, rhs: i32) -> Self::Output {
+        unimplemented!()
+    }
+
+    fn overflowing_shl(self, rhs: u32) -> Self::Output {
+        unimplemented!()
+    }
+
+    fn overflowing_shr(self, rhs: u32) -> Self::Output {
+        unimplemented!()
+    }
+
+    fn overflowing_sub(self, rhs: i32) -> Self::Output {
+        unimplemented!()
     }
 }

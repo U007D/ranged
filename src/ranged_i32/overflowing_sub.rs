@@ -1,7 +1,7 @@
 use super::{panic, RangedI32};
-use crate::OverflowingSub;
+use arith_traits::Overflow;
 
-impl<const START: i32, const END: i32> OverflowingSub<i32> for RangedI32<START, END> {
+impl<const START: i32, const END: i32> Overflow<i32> for RangedI32<START, END> {
     type Output = (Self, bool);
 
     #[must_use]

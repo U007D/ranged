@@ -1,5 +1,5 @@
 use super::*;
-use crate::arith_traits::OverflowingSub;
+use arith_traits::Overflow;
 
 #[test]
 fn overflowing_sub__subtracting_a_non_overflowing_scalar_does_not_overflow() {
@@ -63,14 +63,14 @@ fn overflowing_sub__subtracting_a_minimal_signed_range_overflowing_scalar_overfl
     let res = ranged.overflowing_sub(scalar);
 
     // then
-    assert_eq!(res, (RangedI32::<-100, 100>::new(99).unwrap(), false));
+    assert_eq!(res, (RangedI32::<-100, 100>::new(99).unwrap(), true));
 }
 
 #[test]
 fn overflowing_sub__subtracting_a_machine_word_overflowing_scalar_overflows() {
     // given
     let ranged = RangedI32::<-100, 100>::new(-72).unwrap();
-    let scalar = 29;
+    let scalar = 47;
 
     // when
     let res = ranged.overflowing_sub(scalar);

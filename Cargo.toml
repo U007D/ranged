@@ -12,6 +12,8 @@ version = "0.1.0"
 [dependencies]
 thiserror = "*"
 num-traits = "0.2.11"
+arith_traits = { git = "https://github.com/u007d/arith_traits" }
+arith_wrappers = { git = "https://github.com/u007d/arith_wrappers" }
 
 [profile.dev]
 codegen-units = 1

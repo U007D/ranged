@@ -1,5 +1,5 @@
 use super::{msg, panic, RangedI32};
-use crate::OverflowingSub;
+use arith_traits::Overflow;
 use std::ops::Sub;
 
 #[allow(clippy::use_self)]
@@ -8,8 +8,8 @@ impl<const START: i32, const END: i32, const START_RHS: i32, const END_RHS: i32>
 {
     type Output = RangedI32<{ START - END_RHS + 1 }, { END - START_RHS - 1 }>;
 
-    // See `RangedI32::add()` impl for explanation of why no overflow checks need to be performed
-    // here.
+    // `sub()` is panic-safe ∵ `RangedI32::value` is always between range bounds (verified at
+    // compile time).  ∴ the sum of the contained values cannot overflow.
     #[allow(clippy::integer_arithmetic)]
     fn sub(self, rhs: RangedI32<START_RHS, END_RHS>) -> Self::Output {
         Self::Output::new(self.value - rhs.value)
