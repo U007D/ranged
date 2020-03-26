@@ -13,6 +13,7 @@ impl<const START: i32, const END: i32> Overflow<i32> for RangedI32<START, END> {
     #[allow(clippy::integer_arithmetic)]
     fn overflowing_add(self, rhs: i32) -> (Self, bool) {
         let value_start_offset = signed_value_to_offset(START, self.value);
+        let rhs = rhs;
         match rhs >= 0 {
             true => {
                 #[allow(clippy::cast_sign_loss)]
