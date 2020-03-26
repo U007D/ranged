@@ -9,8 +9,9 @@ use arith_traits::Overflow;
 impl<const START: i32, const END: i32> Overflow<i32> for RangedI32<START, END> {
     type Output = (Self, bool);
 
+    #[inline]
     fn overflowing_abs(self) -> Self::Output {
-        unimplemented!()
+        self.overflowing_abs()
     }
 
     #[inline]
@@ -19,40 +20,49 @@ impl<const START: i32, const END: i32> Overflow<i32> for RangedI32<START, END> {
         self.overflowing_add(rhs)
     }
 
-    fn overflowing_div(self, _rhs: i32) -> Self::Output {
-        unimplemented!()
+    #[inline]
+    fn overflowing_div(self, rhs: i32) -> Self::Output {
+        self.overflowing_div(rhs)
     }
 
-    fn overflowing_div_euclid(self, _rhs: i32) -> Self::Output {
-        unimplemented!()
+    #[inline]
+    fn overflowing_div_euclid(self, rhs: i32) -> Self::Output {
+        self.overflowing_div_euclid(rhs)
     }
 
-    fn overflowing_mul(self, _rhs: i32) -> Self::Output {
-        unimplemented!()
+    #[inline]
+    fn overflowing_mul(self, rhs: i32) -> Self::Output {
+        self.overflowing_mul(rhs)
     }
 
+    #[inline]
     fn overflowing_neg(self) -> Self::Output {
-        unimplemented!()
+        self.overflowing_neg()
     }
 
-    fn overflowing_pow(self, _rhs: u32) -> Self::Output {
-        unimplemented!()
+    #[inline]
+    fn overflowing_pow(self, rhs: u32) -> Self::Output {
+        self.overflowing_pow(rhs)
     }
 
-    fn overflowing_rem(self, _rhs: i32) -> Self::Output {
-        unimplemented!()
+    #[inline]
+    fn overflowing_rem(self, rhs: i32) -> Self::Output {
+        self.overflowing_rem(rhs)
     }
 
-    fn overflowing_rem_euclid(self, _rhs: i32) -> Self::Output {
-        unimplemented!()
+    #[inline]
+    fn overflowing_rem_euclid(self, rhs: i32) -> Self::Output {
+        self.overflowing_rem_euclid(rhs)
     }
 
-    fn overflowing_shl(self, _rhs: u32) -> Self::Output {
-        unimplemented!()
+    #[inline]
+    fn overflowing_shl(self, rhs: u32) -> Self::Output {
+        self.overflowing_shl(rhs)
     }
 
-    fn overflowing_shr(self, _rhs: u32) -> Self::Output {
-        unimplemented!()
+    #[inline]
+    fn overflowing_shr(self, rhs: u32) -> Self::Output {
+        self.overflowing_shr(rhs)
     }
 
     #[inline]

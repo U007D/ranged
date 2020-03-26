@@ -1,4 +1,5 @@
 mod add;
+mod checked;
 mod overflowing;
 mod sub;
 #[cfg(test)]
