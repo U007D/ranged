@@ -1,5 +1,4 @@
 use super::*;
-use arith_traits::Overflow;
 
 #[test]
 fn overflowing_add__adding_a_non_overflowing_scalar_does_not_overflow() {

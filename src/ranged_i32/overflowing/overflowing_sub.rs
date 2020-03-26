@@ -1,17 +1,9 @@
-use super::{panic, RangedI32};
-use arith_traits::Overflow;
+use crate::RangedI32;
 
-impl<const START: i32, const END: i32> Overflow<i32> for RangedI32<START, END> {
-    type Output = (Self, bool);
-
-    #[must_use]
-    // The difference between two signed values when interpreted `as u32` (below) is the absolute
-    // value of their difference, regardless of sign.  `as i32` below is non-lossy since `value`
-    // is guaranteed to be within `i32::max_value()` elements of `START` (`value` is the result of a
-    // subtraction of an `i32` from an `i32`) and thus these integer arithmetic operations cannot
-    // overflow.
+impl<const START: i32, const END: i32> RangedI32<START, END> {
     #[allow(clippy::integer_arithmetic)]
-    fn overflowing_sub(self, rhs: i32) -> (Self, bool) {
+    #[must_use]
+    pub fn overflowing_sub(self, rhs: i32) -> (Self, bool) {
         match rhs >= 0 {
             true => {
                 let (value, overflow) = self.value.overflowing_sub(rhs);
