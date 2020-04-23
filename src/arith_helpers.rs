@@ -1,6 +1,6 @@
 #[inline]
 #[allow(clippy::integer_arithmetic)]
-pub(crate) const fn i32_to_u32(value: i32) -> u32 {
+pub const fn i32_to_u32(value: i32) -> u32 {
     const I32_SIGN_BIT: u32 = 0x8000_0000;
 
     match value >= 0 {
@@ -12,7 +12,7 @@ pub(crate) const fn i32_to_u32(value: i32) -> u32 {
 }
 
 #[inline]
-pub(crate) const fn min_offset(a: u32, b: u32) -> u32 {
+pub const fn min_offset(a: u32, b: u32) -> u32 {
     match a <= b {
         true => a,
         false => b,
@@ -20,7 +20,7 @@ pub(crate) const fn min_offset(a: u32, b: u32) -> u32 {
 }
 
 #[inline]
-pub(crate) const fn max_offset(a: u32, b: u32) -> u32 {
+pub const fn max_offset(a: u32, b: u32) -> u32 {
     match a >= b {
         true => a,
         false => b,
@@ -29,7 +29,7 @@ pub(crate) const fn max_offset(a: u32, b: u32) -> u32 {
 
 #[inline]
 #[allow(clippy::integer_arithmetic)]
-pub(crate) const fn signed_value_to_offset(base: i32, value: i32) -> u32 {
+pub const fn signed_value_to_offset(base: i32, value: i32) -> u32 {
     let u_base = i32_to_u32(base);
     let u_value = i32_to_u32(value);
     max_offset(u_base, u_value) - min_offset(u_base, u_value)
@@ -37,7 +37,7 @@ pub(crate) const fn signed_value_to_offset(base: i32, value: i32) -> u32 {
 
 #[inline]
 #[allow(clippy::integer_arithmetic, clippy::checked_conversions)]
-pub(crate) const fn wrapping_offset_to_value(offset: u32, base: i32) -> i32 {
+pub const fn wrapping_offset_to_value(offset: u32, base: i32) -> i32 {
     #[allow(clippy::cast_possible_wrap)]
     match offset <= (i32::max_value() as u32) {
         true => base.wrapping_add(offset as i32),

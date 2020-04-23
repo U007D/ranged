@@ -1,6 +1,5 @@
 use crate::consts::msg;
-use std::fmt::{Display, Error as StdFmtError, Formatter};
-use thiserror::Error;
+use derive_more::{Display, Error, From};
 
 /// `Error` is a newtype (single-field tuple struct as opposed to an `enum`) with a private inner
 /// type.  This prevents leaking internal dependencies to external consumers.
@@ -8,8 +7,8 @@ use thiserror::Error;
 /// In this example, "external" is defined as outside of the current crate via `pub(crate)` on `.0`.
 /// "External" can be defined as per-module or even per-file, depending on the need, but in my
 /// experience, per-crate is reasonable and has been sufficient.
-#[derive(Debug, Error)]
-pub struct Error(pub(crate) InnerError);
+#[derive(Debug, Display, Error)]
+pub struct Error(InnerError);
 
 impl Error {
     /// The crate developer implements `kind()` to specify the mapping between an `InnerError`
@@ -32,20 +31,15 @@ impl Error {
     }
 }
 
-impl Display for Error {
-    fn fmt(&self, f: &mut Formatter<'_>) -> Result<(), StdFmtError> {
-        write!(f, "{}", self)
-    }
-}
-
 /// The set of errors returnable by this crate.  Note that functions which can truly only fail
 /// for one reason should generally return `Option<T>`, not `Result<T>`.  Because `InnerError` is
 /// private, variant payloads (typically external error types when representing external errors) are
 /// hidden from external consumers of `Error`.
-#[derive(Debug, Error)]
-pub(crate) enum InnerError {
-    #[error("{}: {}", msg::ERR_INVALID_INT_REPR, 0)]
-    InvalidIntRepr(#[from] std::num::ParseIntError),
+#[derive(Debug, Display, Error, From)]
+enum InnerError {
+    #[from]
+    #[display(fmt = "{}: {}", "msg::ERR_INVALID_INT_REPR", "_0")]
+    InvalidIntRepr(std::num::ParseIntError),
 }
 
 /// `ErrorKind` is idiomatic Rust for a static dependency-free exportable, comparable `Error` API.
