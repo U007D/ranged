@@ -1,4 +1,11 @@
-#![feature(bool_to_option, const_fn, const_generics, const_if_match, const_panic)]
+#![feature(
+    bool_to_option,
+    const_fn,
+    const_generics,
+    const_if_match,
+    const_panic,
+    structural_match
+)]
 #![warn(clippy::all, clippy::nursery, clippy::pedantic, rust_2018_idioms)]
 #![forbid(bare_trait_objects)]
 // To use the `unsafe` keyword, change to `#![allow(unsafe_code)]` (do not remove); aids auditing.

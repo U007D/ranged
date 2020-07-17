@@ -1,4 +1,4 @@
-use super::*;
+use super::{assert, *};
 use arith_wrappers::Wrapping;
 
 // Uncomment this test to demonstrate that an invalid range specification is a compile-time error
@@ -50,5 +50,5 @@ fn wrapping__max_value_succeeds() {
     let res = sut + 1_i32;
 
     // then the result should be a `Wrapping` minned `RangedI32`
-    assert_eq!(res, Wrapping(RangedI32::<-10, 10>::new(-10).unwrap()));
+    assert!(res == Wrapping(RangedI32::<-10, 10>::new(-10).unwrap()));
 }

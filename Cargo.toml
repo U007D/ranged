@@ -40,3 +40,6 @@ debug-assertions = true
 lto = false
 opt-level = 0
 rpath = false
+
+[dev-dependencies]
+assert2 = "0.3"

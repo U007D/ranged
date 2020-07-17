@@ -1,4 +1,4 @@
-use super::*;
+use super::{assert, *};
 
 #[test]
 
@@ -12,7 +12,7 @@ fn sub__subtracting_two_ranged_i32s_without_overflowing_succeeds() {
     let res = r1 - r2;
 
     // then
-    assert_eq!(res, RangedI32::<46, 104>::new(75).unwrap());
+    assert!(res == RangedI32::<46, 104>::new(75).unwrap());
 }
 
 #[test]
@@ -27,7 +27,7 @@ fn sub__subtracting_a_scalar_from_a_ranged_without_overflowing_succeeds() {
     let res = ranged - scalar;
 
     // then
-    assert_eq!(res, RangedI32::<0, 100>::new(0).unwrap());
+    assert!(res == RangedI32::<0, 100>::new(0).unwrap());
 }
 
 #[test]

@@ -1,4 +1,4 @@
-use super::*;
+use super::{assert, *};
 
 #[test]
 
@@ -12,7 +12,7 @@ fn overflowing_sub__subtracting_a_non_overflowing_scalar_does_not_overflow() {
     let res = ranged.overflowing_sub(scalar);
 
     // then
-    assert_eq!(res, (RangedI32::<0, 100>::new(0).unwrap(), false));
+    assert!(res == (RangedI32::<0, 100>::new(0).unwrap(), false));
 }
 
 #[test]
@@ -27,7 +27,7 @@ fn overflowing_sub__subtracting_a_range_overflowing_scalar_overflows() {
     let res = ranged.overflowing_sub(scalar);
 
     // then
-    assert_eq!(res, (RangedI32::<0, 100>::new(85).unwrap(), true));
+    assert!(res == (RangedI32::<0, 100>::new(85).unwrap(), true));
 }
 
 #[test]
@@ -42,7 +42,7 @@ fn overflowing_sub__subtracting_a_near_signed_range_overflowing_scalar_does_not_
     let res = ranged.overflowing_sub(scalar);
 
     // then
-    assert_eq!(res, (RangedI32::<-100, 100>::new(-99).unwrap(), false));
+    assert!(res == (RangedI32::<-100, 100>::new(-99).unwrap(), false));
 }
 
 #[test]
@@ -57,7 +57,7 @@ fn overflowing_sub__subtracting_an_at_signed_range_overflowing_scalar_does_not_o
     let res = ranged.overflowing_sub(scalar);
 
     // then
-    assert_eq!(res, (RangedI32::<-100, 100>::new(-100).unwrap(), false));
+    assert!(res == (RangedI32::<-100, 100>::new(-100).unwrap(), false));
 }
 
 #[test]
@@ -72,7 +72,7 @@ fn overflowing_sub__subtracting_a_minimal_signed_range_overflowing_scalar_overfl
     let res = ranged.overflowing_sub(scalar);
 
     // then
-    assert_eq!(res, (RangedI32::<-100, 100>::new(99).unwrap(), true));
+    assert!(res == (RangedI32::<-100, 100>::new(99).unwrap(), true));
 }
 
 #[test]
@@ -87,7 +87,7 @@ fn overflowing_sub__subtracting_a_machine_word_overflowing_scalar_overflows() {
     let res = ranged.overflowing_sub(scalar);
 
     // then
-    assert_eq!(res, (RangedI32::<-100, 100>::new(81).unwrap(), true));
+    assert!(res == (RangedI32::<-100, 100>::new(81).unwrap(), true));
 }
 
 // non-generalized reference impl: https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=60b90923c45252ce3a32c9c089c4914c
@@ -108,9 +108,8 @@ fn overflowing_sub__subtracting_a_machine_word_overflowing_scalar_from_a_mid_siz
     let res = ranged.overflowing_sub(scalar);
 
     // then
-    assert_eq!(
-        res,
-        (
+    assert!(
+        res == (
             RangedI32::<-1_147_483_648, 1_147_483_647>::new(1_147_483_646).unwrap(),
             true
         )

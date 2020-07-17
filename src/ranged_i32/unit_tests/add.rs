@@ -1,4 +1,4 @@
-use super::*;
+use super::{assert, *};
 
 #[test]
 
@@ -12,7 +12,7 @@ fn add__adding_two_ranged_i32s_without_overflowing_succeeds() {
     let res = r1 + r2;
 
     // then
-    assert_eq!(res, RangedI32::<-1000, 2100>::new(2049).unwrap());
+    assert!(res == RangedI32::<-1000, 2100>::new(2049).unwrap());
 }
 
 #[test]
@@ -27,7 +27,7 @@ fn add__adding_a_scalar_to_a_ranged_without_overflowing_succeeds() {
     let res = ranged + scalar;
 
     // then
-    assert_eq!(res, RangedI32::<0, 100>::new(84).unwrap());
+    assert!(res == RangedI32::<0, 100>::new(84).unwrap());
 }
 
 // This test demonstrates that overflowing the addition of two ranges causes a compile  error.

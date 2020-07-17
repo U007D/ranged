@@ -1,4 +1,4 @@
-use super::*;
+use super::{assert, *};
 
 #[test]
 
@@ -12,7 +12,7 @@ fn overflowing_add__adding_a_non_overflowing_scalar_does_not_overflow() {
     let res = ranged.overflowing_add(scalar);
 
     // then
-    assert_eq!(res, (RangedI32::<0, 100>::new(84).unwrap(), false));
+    assert!(res == (RangedI32::<0, 100>::new(84).unwrap(), false));
 }
 
 #[test]
@@ -27,7 +27,7 @@ fn overflowing_add__adding_a_range_overflowing_scalar_overflows() {
     let res = ranged.overflowing_add(scalar);
 
     // then
-    assert_eq!(res, (RangedI32::<0, 100>::new(75).unwrap(), true));
+    assert!(res == (RangedI32::<0, 100>::new(75).unwrap(), true));
 }
 
 #[test]
@@ -42,5 +42,5 @@ fn overflowing_add__adding_a_machine_word_overflowing_scalar_overflows() {
     let res = ranged.overflowing_add(scalar);
 
     // then
-    assert_eq!(res, (RangedI32::<0, 100>::new(19).unwrap(), true));
+    assert!(res == (RangedI32::<0, 100>::new(19).unwrap(), true));
 }

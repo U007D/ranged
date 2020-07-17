@@ -10,7 +10,7 @@ impl<const START: i32, const END: i32, const START_RHS: i32, const END_RHS: i32>
 
     // RangedI32::value cannot overflow at runtime because value is always between range
     // bounds.  Range bounds are const generics and are evaluated at compile
-    // time--i.e. they will abort the compile if they overflow.  Therefore, since compiling range
+    // time--i.e. they will abort the compile if they overflow.  Therefore, since compiled range
     // bounds are always valid, then the sum of the contained values cannot overflow.
     #[allow(clippy::integer_arithmetic)]
 
