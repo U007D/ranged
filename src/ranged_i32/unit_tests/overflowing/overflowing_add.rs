@@ -1,9 +1,11 @@
 use super::*;
 
 #[test]
+
 fn overflowing_add__adding_a_non_overflowing_scalar_does_not_overflow() {
     // given
     let ranged = RangedI32::<0, 100>::new(42).unwrap();
+
     let scalar = 42;
 
     // when
@@ -14,9 +16,11 @@ fn overflowing_add__adding_a_non_overflowing_scalar_does_not_overflow() {
 }
 
 #[test]
+
 fn overflowing_add__adding_a_range_overflowing_scalar_overflows() {
     // given
     let ranged = RangedI32::<0, 100>::new(80).unwrap();
+
     let scalar = 95;
 
     // when
@@ -27,9 +31,11 @@ fn overflowing_add__adding_a_range_overflowing_scalar_overflows() {
 }
 
 #[test]
+
 fn overflowing_add__adding_a_machine_word_overflowing_scalar_overflows() {
     // given
     let ranged = RangedI32::<0, 100>::new(72).unwrap();
+
     let scalar = i32::max_value();
 
     // when

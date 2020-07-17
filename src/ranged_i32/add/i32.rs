@@ -20,9 +20,9 @@ impl<const START: i32, const END: i32> Add<i32> for RangedI32<START, END> {
 
 // Suppress false positive recursion warning
 #[allow(unconditional_recursion)]
+
 impl<const START: i32, const END: i32> AddAssign<i32> for RangedI32<START, END> {
     #[inline]
-    fn add_assign(&mut self, rhs: i32) {
-        *self += rhs
-    }
+
+    fn add_assign(&mut self, rhs: i32) { *self += rhs }
 }

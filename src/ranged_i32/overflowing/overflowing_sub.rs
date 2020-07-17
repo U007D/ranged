@@ -3,10 +3,12 @@ use crate::RangedI32;
 impl<const START: i32, const END: i32> RangedI32<START, END> {
     #[allow(clippy::integer_arithmetic)]
     #[must_use]
+
     pub fn overflowing_sub(self, rhs: i32) -> (Self, bool) {
         match rhs >= 0 {
             true => {
                 let (value, overflow) = self.value.overflowing_sub(rhs);
+
                 #[allow(clippy::cast_possible_wrap, clippy::cast_sign_loss)]
                 match overflow {
                     true => (
@@ -28,7 +30,7 @@ impl<const START: i32, const END: i32> RangedI32<START, END> {
                         false => (Self::new(value).unwrap_or_else(|| unreachable!()), false),
                     },
                 }
-            }
+            },
             false => unimplemented!(),
         }
     }
