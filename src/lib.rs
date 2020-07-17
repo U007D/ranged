@@ -4,7 +4,8 @@
     const_generics,
     const_if_match,
     const_panic,
-    structural_match
+    structural_match,
+    const_option
 )]
 #![warn(clippy::all, clippy::nursery, clippy::pedantic, rust_2018_idioms)]
 #![forbid(bare_trait_objects)]

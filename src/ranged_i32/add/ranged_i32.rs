@@ -13,7 +13,6 @@ impl<const START: i32, const END: i32, const START_RHS: i32, const END_RHS: i32>
     // time--i.e. they will abort the compile if they overflow.  Therefore, since compiled range
     // bounds are always valid, then the sum of the contained values cannot overflow.
     #[allow(clippy::integer_arithmetic)]
-
     fn add(self, rhs: RangedI32<START_RHS, END_RHS>) -> Self::Output {
         Self::Output::new(self.value + rhs.value).unwrap_or_else(|| {
             unreachable!(msg::ERR_INTERNAL_VALUE_UNEXPECTEDLY_EXCEEDED_RANGE_BOUNDS)
@@ -29,5 +28,5 @@ impl<const START: i32, const END: i32, const START_RHS: i32, const END_RHS: i32>
 {
     #[inline]
 
-    fn add_assign(&mut self, rhs: RangedI32<START_RHS, END_RHS>) { *self += rhs }
+    fn add_assign(&mut self, rhs: RangedI32<START_RHS, END_RHS>) { *self += rhs.checked_add(1) }
 }
