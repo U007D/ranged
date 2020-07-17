@@ -1,8 +1,9 @@
 #![feature(
     bool_to_option,
+    const_checked_int_methods,
+    const_evaluatable_checked,
     const_fn,
     const_generics,
-    const_if_match,
     const_panic,
     structural_match
 )]

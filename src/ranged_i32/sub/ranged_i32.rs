@@ -5,7 +5,10 @@ use std::ops::{Sub, SubAssign};
 
 impl<const START: i32, const END: i32, const START_RHS: i32, const END_RHS: i32>
     Sub<RangedI32<START_RHS, END_RHS>> for RangedI32<START, END>
+where
+    RangedI32<{ START - END_RHS + 1 }, { END - START_RHS - 1 }>: ,
 {
+    #[allow(clippy::suspicious_arithmetic_impl)]
     type Output = RangedI32<{ START - END_RHS + 1 }, { END - START_RHS - 1 }>;
 
     // `sub()` is panic-safe ∵ `RangedI32::value` is always between range bounds (verified at

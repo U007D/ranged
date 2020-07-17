@@ -1,17 +1,18 @@
 [package]
 authors = ["u007d <b2b@humanenginuity.com>"]
 categories = []
+description = "An crate providing ranged numeric types."
 edition = "2018"
 keywords = []
-license = "MIT or Apache-2.0"
-name = "ranged_const"
+license = "MIT OR Apache-2.0"
+name = "ranged_type"
 readme = "README.md"
-repository = "https://github.com/u007d/ranged_const"
+repository = "https://github.com/u007d/ranged_type"
 version = "0.1.0"
 
 [dependencies]
-arith_traits = { git = "https://github.com/u007d/arith_traits" }
-arith_wrappers = { git = "https://github.com/u007d/arith_wrappers" }
+arith_traits = "0.1"
+arith_wrappers = "0.1"
 num-traits = "0.2"
 thiserror = "1"
 
