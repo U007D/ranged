@@ -10,8 +10,8 @@ repository = "https://github.com/u007d/ranged_const"
 version = "0.1.0"
 
 [dependencies]
-arith_traits = { git = "https://github.com/u007d/arith_traits" }
-arith_wrappers = { git = "https://github.com/u007d/arith_wrappers" }
+arith_traits = { git = "https://github.com/mx00s/arith_traits", branch = "rustc-workflow" }
+arith_wrappers = { git = "https://github.com/mx00s/arith_wrappers", branch = "rustc-workflow" }
 num-traits = "0.2"
 thiserror = "1"
 

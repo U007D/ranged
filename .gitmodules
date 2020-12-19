@@ -1,0 +1,6 @@
+[submodule "arith_traits"]
+	path = arith_traits
+	url = https://github.com/U007D/arith_traits.git
+[submodule "arith_wrappers"]
+	path = arith_wrappers
+	url = https://github.com/U007D/arith_wrappers.git
