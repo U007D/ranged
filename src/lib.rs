@@ -2,7 +2,6 @@
     bool_to_option,
     const_fn,
     const_generics,
-    const_if_match,
     const_panic,
     structural_match
 )]
