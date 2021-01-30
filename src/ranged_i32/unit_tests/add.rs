@@ -12,7 +12,7 @@ fn add__adding_two_ranged_i32s_without_overflowing_succeeds() {
     let res = r1 + r2;
 
     // then
-    assert!(res == RangedI32::<-1000, 2100>::new(2049).unwrap());
+    assert!(res == RangedI32::<-1000, 2099>::new(2049).unwrap());
 }
 
 #[test]

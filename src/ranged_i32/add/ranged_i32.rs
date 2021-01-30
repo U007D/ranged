@@ -6,7 +6,7 @@ use std::ops::{Add, AddAssign};
 impl<const START: i32, const END: i32, const START_RHS: i32, const END_RHS: i32>
     Add<RangedI32<START_RHS, END_RHS>> for RangedI32<START, END>
 {
-    type Output = RangedI32<{ START + START_RHS }, { END + END_RHS }>;
+    type Output = RangedI32<{ START + START_RHS }, { END + END_RHS - 1 }>;
 
     // RangedI32::value cannot overflow at runtime because value is always between range
     // bounds.  Range bounds are const generics and are evaluated at compile
@@ -28,5 +28,5 @@ impl<const START: i32, const END: i32, const START_RHS: i32, const END_RHS: i32>
 {
     #[inline]
 
-    fn add_assign(&mut self, rhs: RangedI32<START_RHS, END_RHS>) { *self += rhs.checked_add(1) }
+    fn add_assign(&mut self, rhs: RangedI32<START_RHS, END_RHS>) { *self += rhs }
 }

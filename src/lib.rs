@@ -1,11 +1,12 @@
 #![feature(
     bool_to_option,
+    const_checked_int_methods,
+    const_evaluatable_checked,
     const_fn,
     const_generics,
     const_if_match,
     const_panic,
-    structural_match,
-    const_option
+    structural_match
 )]
 #![warn(clippy::all, clippy::nursery, clippy::pedantic, rust_2018_idioms)]
 #![forbid(bare_trait_objects)]
